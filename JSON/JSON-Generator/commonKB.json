@@ -1,0 +1,44 @@
+[
+    {
+        "category": "Story",
+        "id" : '{{index}}',
+        "status" : "Proposed",
+        "ownedBy" : "Smith, John",
+        "Summary" : '{{lorem(8, words)}}',
+         "name": "{{lorem(2, words)}}",
+        "tags": function(tags, index){
+
+    function shuffle(o){ 
+        for(var j, x, i = o.length; i; j = Math.floor(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
+        return o;
+    }
+
+    function getRandomArbitary (min, max) {
+        return Math.random() * (max - min) + min;
+    }
+
+
+    var array = ["Event","Task","in progress","bug","duplicate","enhancement","invalid"];
+    var min = 0, max = array.length,
+    i,
+    arr = [];
+
+    for (i = min; i<max; i++)
+    {
+        arr.push(i);
+    }
+    shuffle(arr);
+    submax = getRandomArbitary(2, arr.length);
+    submin = getRandomArbitary(1, submax);
+    var subarr = arr.slice(submin, submax);
+
+    var returnArr = [];
+
+    for(var j =0; j< subarr.length; j++){
+        returnArr.push(subArr[j]);
+    }
+
+    return returnArr;
+}
+                }
+]
