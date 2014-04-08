@@ -1,44 +1,67 @@
-[
+
+
+[   
+     '{{repeat(10, 15)}}',
     {
-        "category": "Story",
-        "id" : '{{index}}',
-        "status" : "Proposed",
-        "ownedBy" : "Smith, John",
-        "Summary" : '{{lorem(8, words)}}',
-         "name": "{{lorem(2, words)}}",
-        "tags": function(tags, index){
+        "name" : '{{company()}} Kanban',
+        "_id" : function(tags, index){
+            return "ObjectId("+index.toString(24)+")";
+        },
+        "columns": 
+        [
+            '{{repeat(3, 9)}}',
+            {
+                "name" : function(tags, index){
+                    var array = ["Incomming", "Development", "QA", "SIT", "PREF QA", "Review", "Public Beta","Release"];
+                    return array[index];
+                    },
+                "columnId" : '{{index()}}',
+                "cards":[
+                //Cards
+                    '{{repeat(5, 7)}}',
+                    {
+                        "category": "Story",
+                        "id" : '{{index()}}',
+                        "status" : "Proposed",
+                        "ownedBy" : '{{surname()}},{{firstName([gender()])}}',
+                        "Summary" : '{{lorem(8, "words")}}',
+                        "name": '{{lorem(2, "words")}}',
+                        "tags": function(tags, index){
+                            var array = ["Event","Task","in progress","bug","duplicate","enhancement","invalid"];
+                            function shuffle(o){ 
+                                for(var j, x, i = o.length; i; j = Math.floor(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
+                                return o;
+                            }
+                            function getRandomArbitary (min, max) {
+                                return Math.random() * (max - min) + min;
+                            }
+                            var min = 0, max = array.length,
+                                i,
+                                arr = [];
 
-    function shuffle(o){ 
-        for(var j, x, i = o.length; i; j = Math.floor(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
-        return o;
+                            for (i = min; i<max; i++)
+                            {
+                                arr.push(i);
+                            }
+
+                            shuffle(arr);
+                            submax = getRandomArbitary(2, arr.length);
+                            submin = getRandomArbitary(1, submax);
+                           var subarr = arr.slice(submin, submax);
+
+                           var returnArr = new Array(subarr.length);
+
+                            for(var j =0; j< subarr.length; j++){
+                                returnArr[j] = array[subarr[j]];
+                            }
+
+
+                            return returnArr;
+                        }
+
+                    }
+                ]// End of Cards
+           }//End of Columns
+       ]
     }
-
-    function getRandomArbitary (min, max) {
-        return Math.random() * (max - min) + min;
-    }
-
-
-    var array = ["Event","Task","in progress","bug","duplicate","enhancement","invalid"];
-    var min = 0, max = array.length,
-    i,
-    arr = [];
-
-    for (i = min; i<max; i++)
-    {
-        arr.push(i);
-    }
-    shuffle(arr);
-    submax = getRandomArbitary(2, arr.length);
-    submin = getRandomArbitary(1, submax);
-    var subarr = arr.slice(submin, submax);
-
-    var returnArr = [];
-
-    for(var j =0; j< subarr.length; j++){
-        returnArr.push(subArr[j]);
-    }
-
-    return returnArr;
-}
-                }
 ]
